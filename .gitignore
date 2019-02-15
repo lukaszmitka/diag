@@ -1,0 +1,6 @@
+.vscode
+*.sqlite
+node_modules
+package-lock.json
+data
+npm-debug.log
