@@ -25,6 +25,9 @@ SYSTEMCTL_UNITS_FILE="./data/systemctl.units"
 ETC_HOSTS=$(cat /etc/hosts)
 ETC_HOSTS_FILE="./data/etc_hosts.content"
 
+rm -rf data/
+mkdir data
+
 echo "$IFCONFIG">$IFCONFIG_FILE
 echo "$LSUSB">$LSUSB_FILE
 echo "$LIST_PACKAGES">$LIST_PACKAGES_FILE
@@ -41,33 +44,39 @@ cat > ./data/config.json <<EOF
   },
   "kernel": "$KERNEL_VER",
   "uname": "$UNAME",
-  "files": [
+  "file": [
     {
+      "id": "menu_01",  
       "command": "ifconfig",
       "name": "$IFCONFIG_FILE",
       "label": "Network devices"
     },
     {
+      "id": "menu_02",  
       "command": "lsusb",
       "name": "$LSUSB_FILE",
       "label": "USB devices"
     },
     {
+      "id": "menu_03",  
       "command": "apt list --installed",
       "name": "$LIST_PACKAGES_FILE",
       "label": "Installed packages"
     },
     {
+      "id": "menu_04",  
       "command": "ifconfig",
       "name": "$LIST_DEV_FILE",
       "label": "/dev directory"
     },
     {
+      "id": "menu_05",  
       "command": "systemctl list-units",
       "name": "$SYSTEMCTL_UNITS_FILE",
       "label": "Systemctl units"
     },
     {
+      "id": "menu_06",  
       "command": "cat /etc/hosts",
       "name": "$ETC_HOSTS_FILE",
       "label": "Hosts"
@@ -78,7 +87,7 @@ EOF
 
 echo "Compressing data to data.tar.gz"
 tar -zcf data.tar.gz data
-echo "Please send the file with problem description to support@husarion.com"
+echo "Please send the file along with problem description to support@husarion.com"
 
 # Cleanup
 rm -rf data/
