@@ -4,7 +4,7 @@ Tool for getting system diagnostic info.
 
 # How to use
 
-There are two use cases for the tool, first for user and second support team.
+There are two use cases for the tool, first for user and second for support team.
 
 ## For users
 
@@ -20,9 +20,27 @@ When reporting problem to the Husarion team, attach generated file along with pr
 
 ## For support team
 
+### Installation
+
+Clone the repo:
+
+```
+git clone https://github.com/lukaszmitka/diag.git
+```
+
+Install dependencies:
+
+```
+cd diag
+npm install
+```
+
+### Problem analysis
+
 Extract the file provied by user and start nodejs app:
 
 ```
+tar -zxvf data.tar.gz
 npm start
 ```
 
