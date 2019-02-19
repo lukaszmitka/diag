@@ -25,52 +25,69 @@ router.get('/', function (req, res, next) {
     flag: 'r'
   }
 
-  fs.readdirSync(testFolder, options).forEach(fileDirEnt => {
-    if (fileDirEnt.isFile()) {
-      file.push({
-        name: fileDirEnt.name
-      });
-
-      file_content = fs.readFileSync(testFolder + fileDirEnt.name, file_read_options);
-      lines_splitted = file_content.split('\n');
-      lines = [];
-      for (i = 0; i < lines_splitted.length; i++) {
-        lines.push({
-          content: lines_splitted[i]
-        })
-      }
-      filetab.push({
-        name: fileDirEnt.name,
-        line: lines
-      });
-    } else if (fileDirEnt.isDirectory()) {
-      folder_files = [];
-      fs.readdirSync(testFolder + fileDirEnt.name, options).forEach(indirfilename => {
-        if (indirfilename.isFile()) {
-          folder_files.push({
-            name: indirfilename.name
-          })
-          file_content = fs.readFileSync(testFolder + fileDirEnt.name + '/' + indirfilename.name, file_read_options);
-          lines_splitted = file_content.split('\n');
-          lines = [];
-          for (i = 0; i < lines_splitted.length; i++) {
-            lines.push({
-              content: lines_splitted[i]
-            })
-          }
-          filetab.push({
-            name: indirfilename.name,
-            line: lines
-          })
-        }
-      });
-      folder.push({
-        dirname: fileDirEnt.name,
-        file: folder_files
-      }
-      );
+  var metadata = JSON.parse(fs.readFileSync(testFolder + 'config.json', 'utf8'));
+  file = metadata.file;
+  file.forEach(fileEntry => {
+    file_content = fs.readFileSync(fileEntry.name, file_read_options);
+    lines_splitted = file_content.split('\n');
+    lines = [];
+    for (i = 0; i < lines_splitted.length; i++) {
+      lines.push({
+        content: lines_splitted[i]
+      })
     }
+    filetab.push({
+      id: fileEntry.id,
+      line: lines
+    });
   });
+
+  // fs.readdirSync(testFolder, options).forEach(fileDirEnt => {
+  //   if (fileDirEnt.isFile()) {
+  //     file.push({
+  //       name: fileDirEnt.name
+  //     });
+
+  //     file_content = fs.readFileSync(testFolder + fileDirEnt.name, file_read_options);
+  //     lines_splitted = file_content.split('\n');
+  //     lines = [];
+  //     for (i = 0; i < lines_splitted.length; i++) {
+  //       lines.push({
+  //         content: lines_splitted[i]
+  //       })
+  //     }
+  //     filetab.push({
+  //       name: fileDirEnt.name,
+  //       line: lines
+  //     });
+  //   } else if (fileDirEnt.isDirectory()) {
+  //     folder_files = [];
+  //     fs.readdirSync(testFolder + fileDirEnt.name, options).forEach(indirfilename => {
+  //       if (indirfilename.isFile()) {
+  //         folder_files.push({
+  //           name: indirfilename.name
+  //         })
+  //         file_content = fs.readFileSync(testFolder + fileDirEnt.name + '/' + indirfilename.name, file_read_options);
+  //         lines_splitted = file_content.split('\n');
+  //         lines = [];
+  //         for (i = 0; i < lines_splitted.length; i++) {
+  //           lines.push({
+  //             content: lines_splitted[i]
+  //           })
+  //         }
+  //         filetab.push({
+  //           name: indirfilename.name,
+  //           line: lines
+  //         })
+  //       }
+  //     });
+  //     folder.push({
+  //       dirname: fileDirEnt.name,
+  //       file: folder_files
+  //     }
+  //     );
+  //   }
+  // });
   res.render('index', { file, folder, filetab });
 });
 

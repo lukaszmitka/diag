@@ -4,8 +4,8 @@
         <ul class="nav nav-tabs">
             {{#each file}}
             <li class="nav-item">
-                <a class="nav-link" id="{{name}}-tab" data-toggle="tab" href="#{{name}}" role="tab"
-                    aria-controls="{{name}}" aria-selected="true"><code>{{name}}</code></a>
+                <a class="nav-link" id="{{id}}-tab" data-toggle="tab" href="#{{id}}" role="tab"
+                    aria-controls="{{id}}" aria-selected="true"><code>{{label}}</code></a>
             </li>
             {{/each}}
             {{#each folder}}
@@ -26,7 +26,7 @@
 
 <div class="tab-content" id="myTabContent">
     {{#each filetab}}
-    <div class="tab-pane fade" id="{{name}}" role="tabpanel" aria-labelledby="{{name}}-tab">
+    <div class="tab-pane fade" id="{{id}}" role="tabpanel" aria-labelledby="{{id}}-tab">
         <code>
         {{#each line}}
         {{content}}<br/>
