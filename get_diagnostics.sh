@@ -1,7 +1,8 @@
 #!/bin/sh
 
-echo "Getting diagnostic data from device\r\n"
-
+echo "Getting diagnostic data from device"
+echo "This script will gather only system configuration data, it will not gather any personal data or any of your project files."
+ 
 UNIVERSAL_TIME=$(date -u +%Y/%m/%d-%H:%M:%S)
 SYSTEM_TIME=$(date +%Y/%m/%d-%H:%M:%S)
 KERNEL_VER=$(uname -r)
