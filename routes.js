@@ -9,22 +9,40 @@ router.get('/', function (req, res, next) {
   var file = [];
   var folder = [];
   var folder_files = [];
-
+  var file_content = '';
+  var lines_splitted = '';
+  var lines = [];
+  var i = 0;
   const testFolder = './data/';
 
   var options = {
     encoding: 'utf8',
     withFileTypes: true
   }
+
+  var file_read_options = {
+    encoding: 'utf8',
+    flag: 'r'
+  }
+
   fs.readdirSync(testFolder, options).forEach(fileDirEnt => {
     if (fileDirEnt.isFile()) {
       file.push({
         name: fileDirEnt.name
       });
+
+      file_content = fs.readFileSync(testFolder + fileDirEnt.name, file_read_options);
+      lines_splitted = file_content.split('\n');
+      lines = [];
+      for (i = 0; i < lines_splitted.length; i++) {
+        lines.push({
+          content: lines_splitted[i]
+        })
+      }
       filetab.push({
         name: fileDirEnt.name,
-        content: 'Lorem ipsum'
-      })
+        line: lines
+      });
     } else if (fileDirEnt.isDirectory()) {
       folder_files = [];
       fs.readdirSync(testFolder + fileDirEnt.name, options).forEach(indirfilename => {
@@ -32,9 +50,17 @@ router.get('/', function (req, res, next) {
           folder_files.push({
             name: indirfilename.name
           })
+          file_content = fs.readFileSync(testFolder + fileDirEnt.name + '/' + indirfilename.name, file_read_options);
+          lines_splitted = file_content.split('\n');
+          lines = [];
+          for (i = 0; i < lines_splitted.length; i++) {
+            lines.push({
+              content: lines_splitted[i]
+            })
+          }
           filetab.push({
             name: indirfilename.name,
-            content: 'Lorem ipsum dolor sit amet'
+            line: lines
           })
         }
       });

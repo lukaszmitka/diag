@@ -14,8 +14,8 @@
                     aria-expanded="false"><code>{{dirname}}</code></a>
                 <div class="dropdown-menu">
                     {{#each file}}
-                    <a class="dropdown-item"id="{{name}}-tab" data-toggle="tab" href="#{{name}}" role="tab"
-                    aria-controls="{{name}}" aria-selected="true"><code>{{name}}</code></a>
+                    <a class="dropdown-item" id="{{name}}-tab" data-toggle="tab" href="#{{name}}" role="tab"
+                        aria-controls="{{name}}" aria-selected="true"><code>{{name}}</code></a>
                     {{/each}}
                 </div>
             </li>
@@ -26,6 +26,12 @@
 
 <div class="tab-content" id="myTabContent">
     {{#each filetab}}
-    <div class="tab-pane fade" id="{{name}}" role="tabpanel" aria-labelledby="{{name}}-tab">{{content}}</div>
+    <div class="tab-pane fade" id="{{name}}" role="tabpanel" aria-labelledby="{{name}}-tab">
+        <code>
+        {{#each line}}
+        {{content}}<br/>
+        {{/each}}
+        </code>
+    </div>
     {{/each}}
 </div>
