@@ -35,6 +35,23 @@ echo "$LIST_DEV">$LIST_DEV_FILE
 echo "$SYSTEMCTL_UNITS">$SYSTEMCTL_UNITS_FILE
 echo "$ETC_HOSTS">$ETC_HOSTS_FILE
 
+UDEV_RULES='"folder": [{
+    "id": "udev_rules", 
+    "label": "Udev rules",
+    "file": ['
+FILE_ID=$((0))
+for FILENAME in /etc/udev/rules.d/*.rules; do
+    NAME=${FILENAME##*/}
+    cp $FILENAME ./data/$NAME
+    # echo "$FILENAME with name: $NAME"
+    UDEV_RULES="$UDEV_RULES { \"name\": \"./data/$NAME\", \"id\": \"udev_$FILE_ID\", \"label\": \"$NAME\" },"
+    FILE_ID=$((FILE_ID+1))
+done
+# echo $UDEV_RULES
+UDEV_RULES="${UDEV_RULES%?}"
+# echo "${UDEV_RULES: : -1}"
+UDEV_RULES="$UDEV_RULES]}]"
+
 # Create json with metadata
 cat > ./data/config.json <<EOF
 {
@@ -81,7 +98,8 @@ cat > ./data/config.json <<EOF
       "name": "$ETC_HOSTS_FILE",
       "label": "Hosts"
     }
-  ]
+  ],
+  $UDEV_RULES
 }
 EOF
 

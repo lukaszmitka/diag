@@ -11,11 +11,11 @@
             {{#each folder}}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false"><code>{{dirname}}</code></a>
+                    aria-expanded="false"><code>{{label}}</code></a>
                 <div class="dropdown-menu">
                     {{#each file}}
-                    <a class="dropdown-item" id="{{name}}-tab" data-toggle="tab" href="#{{name}}" role="tab"
-                        aria-controls="{{name}}" aria-selected="true"><code>{{name}}</code></a>
+                    <a class="dropdown-item" id="{{id}}-tab" data-toggle="tab" href="#{{id}}" role="tab"
+                        aria-controls="{{id}}" aria-selected="true"><code>{{label}}</code></a>
                     {{/each}}
                 </div>
             </li>

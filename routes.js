@@ -42,55 +42,25 @@ router.get('/', function (req, res, next) {
     });
   });
 
-  // fs.readdirSync(testFolder, options).forEach(fileDirEnt => {
-  //   if (fileDirEnt.isFile()) {
-  //     file.push({
-  //       name: fileDirEnt.name
-  //     });
-
-  //     file_content = fs.readFileSync(testFolder + fileDirEnt.name, file_read_options);
-  //     lines_splitted = file_content.split('\n');
-  //     lines = [];
-  //     for (i = 0; i < lines_splitted.length; i++) {
-  //       lines.push({
-  //         content: lines_splitted[i]
-  //       })
-  //     }
-  //     filetab.push({
-  //       name: fileDirEnt.name,
-  //       line: lines
-  //     });
-  //   } else if (fileDirEnt.isDirectory()) {
-  //     folder_files = [];
-  //     fs.readdirSync(testFolder + fileDirEnt.name, options).forEach(indirfilename => {
-  //       if (indirfilename.isFile()) {
-  //         folder_files.push({
-  //           name: indirfilename.name
-  //         })
-  //         file_content = fs.readFileSync(testFolder + fileDirEnt.name + '/' + indirfilename.name, file_read_options);
-  //         lines_splitted = file_content.split('\n');
-  //         lines = [];
-  //         for (i = 0; i < lines_splitted.length; i++) {
-  //           lines.push({
-  //             content: lines_splitted[i]
-  //           })
-  //         }
-  //         filetab.push({
-  //           name: indirfilename.name,
-  //           line: lines
-  //         })
-  //       }
-  //     });
-  //     folder.push({
-  //       dirname: fileDirEnt.name,
-  //       file: folder_files
-  //     }
-  //     );
-  //   }
-  // });
+  folder = metadata.folder;
+  folder.forEach(folderEntry => {
+    folderEntry.file.forEach(folderFile => {
+      console.log(folderFile.name);
+      file_content = fs.readFileSync(folderFile.name, file_read_options);
+      lines_splitted = file_content.split('\n');
+      lines = [];
+      for (i = 0; i < lines_splitted.length; i++) {
+        lines.push({
+          content: lines_splitted[i]
+        })
+      }
+      filetab.push({
+        id: folderFile.id,
+        line: lines
+      });
+    });
+  });
   res.render('index', { file, folder, filetab });
 });
-
-
 
 module.exports = router;
