@@ -32,6 +32,7 @@ echo "$LIST_DEV">$LIST_DEV_FILE
 echo "$SYSTEMCTL_UNITS">$SYSTEMCTL_UNITS_FILE
 echo "$ETC_HOSTS">$ETC_HOSTS_FILE
 
+# Create json with metadata
 cat > ./data/config.json <<EOF
 {
   "time": {
@@ -79,4 +80,5 @@ echo "Compressing data to data.tar.gz"
 tar -zcf data.tar.gz data
 echo "Please send the file with problem description to support@husarion.com"
 
+# Cleanup
 rm -rf data/
